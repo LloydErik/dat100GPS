@@ -18,7 +18,6 @@ public class GPSPoint {
 		
 	}
 
-	// TODO - get/set metoder
 	public int getTime() {
 		
 		return this.time;

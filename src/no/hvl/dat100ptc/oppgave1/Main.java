@@ -14,7 +14,6 @@ public class Main {
 		System.out.println(point.toString());
 		
 		
-		
 	}
 
 }

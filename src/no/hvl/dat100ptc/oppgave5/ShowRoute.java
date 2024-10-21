@@ -64,27 +64,55 @@ public class ShowRoute extends EasyGraphics {
 
 	public void showRouteMap(int ybase) {
 
-		// TODO 
-		throw new UnsupportedOperationException(TODO.method());
-		
+	    setColor(0, 0, 255); 
+
+	    for (int i = 0; i < gpspoints.length - 1; i++) {
+	        int x1 = MARGIN + (int) ((gpspoints[i].getLongitude() - minlon) * xstep);
+	        int y1 = ybase - (int) ((gpspoints[i].getLatitude() - minlat) * ystep);
+	        int x2 = MARGIN + (int) ((gpspoints[i + 1].getLongitude() - minlon) * xstep);
+	        int y2 = ybase - (int) ((gpspoints[i + 1].getLatitude() - minlat) * ystep);
+
+	        drawLine(x1, y1, x2, y2); 
+	    }		
 	}
 
 	public void showStatistics() {
+	    int TEXTDISTANCE = 20;
 
-		int TEXTDISTANCE = 20;
+	    setColor(0, 0, 0);
+	    setFont("Courier", 12);
 
-		setColor(0,0,0);
-		setFont("Courier",12);
-		
-		// TODO
-		throw new UnsupportedOperationException(TODO.method());
+	    String[] stats = {
+	        "Total time: " + GPSUtils.formatTime(gpscomputer.totalTime()),
+	        "Total distance: " + GPSUtils.formatDouble(gpscomputer.totalDistance() / 1000) + " km",
+	        "Total elevation: " + GPSUtils.formatDouble(gpscomputer.totalElevation()) + " m",
+	        "Max speed: " + GPSUtils.formatDouble(gpscomputer.maxSpeed()) + " km/h",
+	        "Average speed: " + GPSUtils.formatDouble(gpscomputer.averageSpeed()) + " km/h",
+	        "Energy: " + GPSUtils.formatDouble(gpscomputer.totalKcal(80)) + " kcal" 
+	    };
+
+	    for (int i = 0; i < stats.length; i++) {
+	        drawString(stats[i], MARGIN, MARGIN + i * TEXTDISTANCE);
+	    }
 		
 	}
 
 	public void replayRoute(int ybase) {
+	    int RADIUS = 5;
+	    setColor(0, 0, 255); 
+	    
+	    int x = MARGIN + (int) ((gpspoints[0].getLongitude() - minlon) * xstep);
+	    int y = ybase - (int) ((gpspoints[0].getLatitude() - minlat) * ystep);
+	    
+	    int circle = fillCircle(x, y, RADIUS);
+	    setSpeed(5); 
 
-		// TODO 
-		throw new UnsupportedOperationException(TODO.method());
+	    for (int i = 1; i < gpspoints.length; i++) {
+	        int nextX = MARGIN + (int) ((gpspoints[i].getLongitude() - minlon) * xstep);
+	        int nextY = ybase - (int) ((gpspoints[i].getLatitude() - minlat) * ystep);
+
+	        moveCircle(circle, nextX, nextY);
+	    }
 		
 	}
 
